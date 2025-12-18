@@ -1,0 +1,48 @@
+using System;
+					
+public class Program
+{
+	public static void Main()
+	{
+		int a = 10;  //정수
+		float b = 10.1F;//실수
+		string c = "ten";//문자열 ""필요
+		bool d = true;// true or faase"
+		const char e = 'e'; // 1글자
+		//const를 붙이면 이후로 변수값 전환 불가
+		
+		string i = Console.ReadLine();
+		int l = int.Parse(i);
+		Console.WriteLine(l + 1); // num에 들어 있는 숫자는 문자열임으로 형변환을 통해 정수로 바꿔야 연산이 됨	
+		
+		Console.Write("십 ="+a); // +쓰면 붙여씀 + 숫자끼리는 합산되어버림
+		Console.WriteLine("\t인트 = {0}, \"플룻 = {1}\", \n스트링 = {2}",a,b,c); // {0],변수 쓰면 변수값이 들감
+		// /n 줄바꿈 /t 탭 간격 띄우기 /" ""을 쓰고 싶을때 
+		Console.WriteLine($"\n{a}\n{b}\n{c}\n{d}\n{e}");//$ 앞에 붙이고{변수}쓰면됨
+		//Write 붙여씀 WriteLine 줄바꿈
+		
+		a = 10;
+		b = (float)a; // a(정수)를 b(실수)로 바꿈 숫자 형변환때 사용 (int),(double)등등
+		// 강제 변환이라 숫자가 잘리거나 할 수 있음
+		
+		c = "10";
+		a = Convert.ToInt32(c); //문자 10을 정수 10으로 변환 ToBoolen ToString Convert.ToDouble등등
+		//다양한 타입으로 변환가능
+		
+		a = int.Parse(c); // 문자열10을 정수 10으로 변환
+		//문자열 -> 숫자만 가능
+		
+		
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+}
