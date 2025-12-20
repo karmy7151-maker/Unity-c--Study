@@ -1,0 +1,59 @@
+using System;
+					
+public class EnumProgram
+{
+	public enum Type{ //enum은 열거형 상수를 표현하기 위한것
+	Soft, //0
+	Stand, //1
+	Hard = 5 // 5,  숫자지정가능
+	} // 컴퓨터는 이를 0 1 2로 받아들이지만 우리는 단어로 받아들임
+	
+	public static void Main()
+	{
+		Type type; // 변수 선언
+		
+		type = Type.Soft; //값대입 반드시 이름. 으로 접근후 사용할것
+		
+		int typenum = (int)Type.Hard; // 가지고 있는 값을 정수로 변환후 저장
+		
+		
+	}
+}
+
+public class Program
+{
+	
+	public static void Main()
+	{
+		int a = 10;
+		int b = 20;
+		
+		Console.WriteLine(a+b);
+		Console.WriteLine(a-b);
+		Console.WriteLine(a*b);
+		Console.WriteLine(a/b);
+		Console.WriteLine(a%b);
+		
+		int c = a;
+		c += a;
+		c -= a;
+		c *= a;
+		c ++;
+		c --;
+		
+		/*&& || ! 각 and or not 주로 if문에 쓰이며 &&은 모든 조건 만족
+		||은 한 조건일도 만족 !은 부정일시*/
+		
+		/* < > == != >= <=  비교문 각 크기,같은지,다른지,크거나같은지를 본다*/
+		
+		c = (a>b) ? a : b; //a가 b보다 크면 a를 아니면 b를 c에 대입한다
+		
+		string q = "ss";
+		string p = "pp";
+		string s = q ?? p;  //a가 null이아니면 a를 null이면 b를 대입
+		// null이란 값이 아예 없는 상태를 말함 0아님
+		// 기본적으로 문자열이 null상태를 가질 수 있고 int는 가질 수 없으나
+		//int? a같이 뒤에?를 붙이면 사용가능하다
+
+	}
+}
