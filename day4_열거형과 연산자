@@ -57,3 +57,45 @@ public class Program
 
 	}
 }
+public class ProgramIF
+{
+	public static void Main()
+	{
+	
+	int i = int.Parse(Console.ReadLine());
+		if( i > 10){ //if는 조건이 참일 경우 작동  {} <= 안에 있는 코드 작동
+			Console.WriteLine("i가 10보다 큽니다");
+		}
+		else if(i < 10 && i > 0){ //else if는 if가 거짓인 경우 다른 조건을 보고 참일경우 실행
+			
+			Console.WriteLine("i는 10보다 작고 0보다 큽니다");
+			
+		}
+		else if(i < 0 || i == 0){ //&& 둘다 참 || 둘중 하나만 참이여도
+			
+			Console.WriteLine("i는 0보다 작거나 0입니다");
+			
+		}
+		else{// if와 else if가 모두 거짓일 경우 작동
+			Console.WriteLine("i가 10입니다");
+		}
+	
+		int l = int.Parse(Console.ReadLine());
+		switch(l){ //()안의 변수가 여러값을 가질 경우 사용한다
+				
+			case 1:    //case 조건값:  코드   break; 식으로 작성 
+				Console.WriteLine("1입니다");
+				break;
+			case 2:
+				Console.WriteLine("2입니다");
+				break;
+			case 3:
+				Console.WriteLine("3입니다");
+				break;	
+			default: // default는 모든 맞는 케이스가 없을경우 작동한다 
+				Console.WriteLine("맞는 케이스가 없습니다");
+				break;
+		
+		}	
+	}
+}
