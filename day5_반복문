@@ -1,0 +1,47 @@
+using System;
+					
+public class Program
+{
+	public static void Main()
+	{
+		for(int i = 0; i < 10; i++){ //for (변수;조건문;증강연산자)로 구분 
+									//- 조건문이 충족될때까지  for문내 코드반복
+			
+			Console.WriteLine("Loop {0}", i);
+		}
+		string[] array = new string[] {"A","B","C","D"};
+		
+			foreach(string l in array){//타입 가상변수 in 배열/컬렉션 
+				Console.WriteLine(l);//배열및 컬렉션의 요소를 하나씩 꺼내서 다 사용할때까지 반복
+		}
+		// 2차원 3차원 배열의 경우 foreach를 사용하면 순서에 맞게 반복된다.
+		//for문 사용시 중첩시켜 사용해야하니 각 상황에 맞게 사용할 것
+	
+		int a = 1;
+		while (a < 10){ //while(조건문) 조건문이 true인 동안 무한 반복 - 반드시 탈출문을 만들어 두어야함
+			 Console.WriteLine(a);
+      		 a++;
+		}
+		int b = 1;
+		do{ //조건이 참이든 거짓이든 무조건 한번은 실행
+			Console.WriteLine(b);
+      		 b++;
+		}
+		while (b <= 5); 
+		
+		for(int i = 0; i < 10; i++){ 
+				
+			if(i %2 ==0){
+				Console.WriteLine("짝수는 없는걸로");
+				continue;//해당 루프를 건너 뛴다
+			}
+			else if(i == 5 ){
+				Console.WriteLine("5번이다! 탈출");
+				break;	//반복문을 즉시 끝내고 탈출시킨다.
+			}
+			Console.WriteLine("Loop {0}", i);
+			
+		}
+		
+	}
+}
