@@ -1,0 +1,35 @@
+using System;
+
+public class Human{//클래스 선언
+	
+	public int age; //public private protected 가 있는데 public은 필드 밖에서도 접근가능 
+	//private는 해당 클래스 내에서 사용가능하나 외부에선 접근 불가
+	//protected 는 상속받은 클래스만 접근가능
+	public string name;
+	
+	public Human(string name, int age){ // 생성자 객체가 생성될때 호출되며 초기화 작업 수행
+	this.name = name; // this는 자기 자신을 말함
+	this.age = age;
+		
+	}
+	public void Talk(){ // 함수는 타입 출력 이름(입력)으로 이루어져있음 + 나중에 따로 다룰예정
+		
+	Console.WriteLine($"이름은 {name}, 나이는{age}");	
+	}
+}
+
+public class Player{//프로퍼티는 데이터의 잘못된 접근을 방지하기 위한 장치
+	
+	private string name; //prvate로 생성
+	private int gold;
+	
+	public string Name{get;set;}// 자동 구현 프로퍼티, 확장성을 위해 사용권장
+	public int Gold{ // get은 불러올떄 set은 입력할때를 뜻하며 변수를 함수처럼 사용가능
+	
+		get{return gold;}
+		set{if (value + gold > 999) gold = 999; else if(value + gold <0) gold =0; else gold = value;
+		   Console.WriteLine($"현재 Gold는 {gold}gold입니다");}
+		}
+	}
+	
+	
