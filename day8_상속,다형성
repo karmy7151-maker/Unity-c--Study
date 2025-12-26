@@ -1,0 +1,57 @@
+using System;
+					
+public class Program
+{
+	public static void Main()
+	{
+		
+		Human namil = new Namil(100,2,"남일"); 
+		Human suan = new Suan(50,4,"수안");
+		
+		namil.Self();
+		suan.Self();
+		
+		namil.Attack(); //서로 같은 부모에게 상속받았음에도 출력에 차이가 남
+		suan.Attack();
+
+		Human[] humans = new Human[]{new Namil(1200,20,"나미리"),new Suan(10,40,"스완")}; // 클래스자체는 변수타입으로 사용가능
+		foreach(Human h in humans){ //humans안에 있는 클래스가 Human속성이라면 반복때마다 h에 넣고 함수실행
+			h.Self();
+			h.Attack();
+		}
+		
+	}
+}
+
+public class Human{ // 부모 클래스 선언
+	public int hp;
+	public int level;
+	public string name;
+	
+	public void Self(){
+	Console.WriteLine($"{name}의 체력은{hp}\n{name}의 레벨은{level}");	
+	}
+	public virtual void Attack(){ // virual를 통해 상속받는 클래스에서 자유롭게 고칠 수 있음
+	Console.WriteLine($"공격중입니다");	
+	}
+	public Human(int hp, int level, string name){//생성자
+		this.name = name;
+		this.hp = hp;
+		this.level = level;
+	}
+}
+//자식클래스 나밀
+public class Namil:Human{ //상속받을땐 클래스이름:부모클래스 형식으로 사용
+	public Namil(int hp, int level, string name) : base(hp, level, name) { } // 생성자를 만들었다면 base키워드를 통해 전달해야함
+	public override void Attack(){//override 를 사용하여 함수를 조정함
+	base.Attack(); //base는 부모클래스의 것을 사용한다는 의미
+	Console.WriteLine($"{name}가 주먹을 휘두릅니다.");	
+	}	
+}
+//자식클래스 수안
+public class Suan:Human{
+	public Suan(int hp, int level, string name) : base(hp, level, name) { }
+	public override void Attack(){
+	Console.WriteLine($"{name}가 발차기를 합니다.");	
+	}
+}
