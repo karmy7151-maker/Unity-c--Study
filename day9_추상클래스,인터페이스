@@ -1,0 +1,57 @@
+using System;
+					
+public class Program
+{
+	public static void Main()
+	{
+		Console.WriteLine("Hello World");
+		Human namil = new Human();
+		Item healPack = new Item();
+		
+		namil.Name = "나밀";
+		namil.Hp = 100;
+		namil.Attack();
+		namil.Heal();
+		namil.TakeDamage(50);
+		healPack.Heal();
+		namil.TakeDamage(60);
+		
+	}
+}
+
+
+public abstract class LivingEntity{ //추상클래스는 abstract을 사용해 선언
+	private string name;
+	private int hp;
+	public string Name{get;set;}
+	public int Hp{get;set;}
+	
+	public abstract void OnDeath();//추상 메서드 구현하지 안고 선언만함-상속받을시 반드시 구현해야함
+	
+	public void TakeDamage(int damage){// 일반 함수도 상속가능
+		Hp -= damage;
+		Console.WriteLine($"{damage}만큼 피해를 받았습니다");
+		if(Hp <=0) OnDeath();
+	}
+}
+
+public interface IAttack{// interface를 통해 구현하며 이름앞에I를 붙이는게 국룰
+	
+	public void Attack();//선언만함 상속시 반드시 세부내용을 구현해야함
+}
+
+public interface IHeal{
+	public void Heal();
+}
+
+
+public class Human:LivingEntity,IAttack,IHeal{//추상클래스는 1개만 상속가능하나 인터페이스는 여러개 상속가능
+	public override void OnDeath(){// override로 구현
+		Console.WriteLine("사망했어요");
+	}
+	public void Attack(){ Console.WriteLine("공격했어요"); }
+	public void Heal(){Console.WriteLine("회복했어요");}
+}
+public class Item:IHeal{
+	public void Heal(){Console.WriteLine("상자를 통해 회복했어요");}
+}
