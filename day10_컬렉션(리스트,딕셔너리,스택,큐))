@@ -1,0 +1,58 @@
+using System;
+using System.Collections; //arrayList사용시
+using System.Collections.Generic;// 컬렉션 사용시 반드시 선언해야함
+public class Program
+{
+	public static void Main()
+	{
+		ArrayList anything = new ArrayList();// objec타입 아무타입이나 넣을 수 있음
+		anything.Add(90);
+		anything.Add("90");
+		anything.Add(true);
+		Console.WriteLine($"{(int)anything[0]}{(string)anything[1]}{(bool)anything[2]}");
+		//object라는 타입을 가지므로 사용전 타입변환을 하고 사용하자
+		
+		List<int> number = new List<int>();//선언 타입을 정해줘야함
+		number.Add(10);
+		number.Add(10);
+		number.Add(10);// 0번쨰에 10을 추가
+		number.Insert(2,10); // 중간삽입 위치,n
+		number.Remove(10);//숫자10을 없앰 // 같은 요소가 있다면 가장 최근것을 삭제
+		number.RemoveAt(0);//n번째 인덱스 위치 리스트 삭제
+		Console.WriteLine(number.Count);// 리스트 크기 체크
+		number.Clear(); //리스트 내 자료 삭제
+		
+		Dictionary<string, string> keys = new Dictionary<string, string>();//키값과 밸류값을 정의
+		keys.Add("첫번째","사탕");//검색할땐 [키값]으로 검색하면됨
+		keys.Add("두번째","멜론");
+		keys.Add("세번째","콜라");
+		Console.WriteLine(keys["첫번째"]);//사탕
+		Console.WriteLine(keys["세번째"]);//콜라
+		
+		foreach(var item in keys){ //모든 키값과 밸류값을 알아내는법
+			Console.WriteLine(item.Key);
+			Console.WriteLine(item.Value);
+		}
+		if(keys.ContainsKey("첫번째")){Console.WriteLine("첫번째는 존재한다");} //ContainsKey or value로 그 값이 존재하는지 검사가능
+		if(keys.ContainsValue("콜라")){Console.WriteLine("콜라는 존재한다");}
+		
+		
+		Queue<int> que = new Queue<int>();//큐는 선입선출  먼저들어온게 먼저나감
+		
+		que.Enqueue(10);//추가
+        que.Enqueue(20);
+        que.Enqueue(30);
+		Console.WriteLine($"현재 맨 앞의 값: {que.Peek()}");//가장 앞에 있는 값 보기
+		Console.WriteLine($"현재 맨 앞의 값: {que.Dequeue()}");//가장 앞에 있는 값 빼기
+		Console.WriteLine($"현재 맨 앞의 값: {que.Contains(20)}");//존재확인
+		Stack<int> stack = new Stack<int>();//후입선출 //나중에 들어온게 먼저나감
+		
+		stack.Push(10);//추가
+		stack.Push(20);
+		stack.Push(30);
+		Console.WriteLine($"현재 맨 앞의 값: {stack.Pop()}");//가장 앞에 있는 값 빼기
+		Console.WriteLine($"현재 맨 앞의 값: {stack.Peek()}");//가장 앞에 있는 값 보기
+		Console.WriteLine($"현재 맨 앞의 값: {stack.Contains(30)}");//존재확인
+		Console.WriteLine("Hello World");
+	}
+}
