@@ -1,0 +1,64 @@
+using System;
+using System.Linq; // LINQ를 위해 반드시 필요
+using System.Collections.Generic; // List를 위해 반드시 필요
+
+public class Program
+{
+    public static void Main()
+    {
+        Console.WriteLine("--- LINQ 실행 결과 ---");
+        
+        List<Student> students = new List<Student>
+        {
+            new Student(0,"나밀",23),
+            new Student (1,"야림",25),
+            new Student (2,"지현",21),
+            new Student (3,"동주",22),
+            new Student (4,"수안",23)
+        };
+
+        // 쿼리 구문
+        var query = from student in students
+                    where student.Age >= 21 // 조건 필터링
+                    orderby student.Name // 오름차순 정렬 OrderByDescending 내림차순
+                    select student.Name; // 추출 및 가공 (student.Name =student.Name + "S")
+					
+        foreach (var name in query)
+        {
+            Console.WriteLine(name);
+        }
+		// 메서드 구문 주로 메서드 구문 사용
+		 var queryT = students
+			 .Where(s => s.Age >= 23) // .을 체이닝이라고 하며 .으로 계속 구문을 연결한다
+			 .OrderByDescending(s => s.Name) // ()안에 들어가는 조건식을 서술어라고 한다
+			 .Select(s=> s.Name);
+		
+		 foreach (var name in queryT)
+        {
+            Console.WriteLine(name);
+        }
+		var suden = students.First(s => s.ID == 3); //조건에 맞는 가장 첫번째 요소 반환 //없으면 오류
+		Console.WriteLine($"3번 학생의 이름은 {suden.Name}");
+		
+		var suden1 = students.FirstOrDefault(s => s.ID == 10); //조건에 맞는 가장 첫번째 요소 반환//없으면 null반환
+		Console.WriteLine($"2번 학생의 이름은 {suden1}");
+		
+		int totalStudenCount = students.Count(); // 총갯수
+		int sumAge = students.Sum(s => s.Age); //합계
+		double avgAge = students.Average(s => s.Age);//평균값
+		
+		bool adult = students.Any(s => s.Age >= 23); // 존재하는가? true or false
+		Console.WriteLine($"총학생수: {totalStudenCount}, 나이합계 {sumAge}, 나이평균 {avgAge}, 25세이상이 있는가 {adult}");
+		
+		
+    }
+}
+
+public class Student(int id, string name, int age) // 생성자 축약형 입력칸에 곧바로 변수할당
+{
+    public int ID { get; set; } = id; // 프로퍼티 = 인자 하면됨 new Student(0,"나밀",23)식으로 가능
+    public string Name { get; set; } = name;
+    public int Age { get; set; } = age;
+	
+
+}
