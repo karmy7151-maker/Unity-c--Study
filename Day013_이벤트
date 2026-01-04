@@ -1,0 +1,20 @@
+using System;
+					
+public class Game
+{
+	public event Action Play; //  이벤트는 클래스 내 선언 해당클래스 내부에서만 실행가능
+	public void Start(){Console.WriteLine("시작했습니다");  
+						Play?.Invoke();} // ?.Invoke 는 등록된 함수가 존재할때 실행하라는뜻
+}
+
+public class Program{
+	public static void Main(){
+	Game game = new Game();
+	game.Play += () => Console.WriteLine("로딩");
+	game.Play += () => Console.WriteLine("화면 불러오기");
+	//game.Play();  불가 외부에서 직접호출 불가
+	//game.Play = null  불가 외부에서 초기화(접근)불가
+	game.Start(); 
+	}	
+}
+
