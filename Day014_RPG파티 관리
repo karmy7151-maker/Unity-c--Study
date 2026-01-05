@@ -1,0 +1,63 @@
+using System;
+					
+//실습: RPG파티 관리 시스템 
+
+
+public interface IAttackable{
+	public void Attack();	
+}
+
+public abstract class Hero:IAttackable{
+	private string name;
+	private int level;
+	private string job;
+	
+	public string Name{get;set;}
+	public int Level{get;set;}
+	protected string Job{get;set;}
+	
+	public abstract void Attack();
+
+	public Hero(string name, int level, string job){
+		this.Name = name;
+		this.Level = level;
+		this.Job = job;
+	}
+}
+
+public class Warrior:Hero{
+	public Warrior(string name, int level, string job) : base(name,1,"전사"){ }	
+	public override void Attack(){
+		Console.WriteLine($"{Job},{Name}의 검격 공격!");
+	}
+}
+public class Acher:Hero{
+	public Acher(string name, int level, string job) : base(name,1,"아처"){ }	
+	public override void Attack(){
+		Console.WriteLine($"{Job},{Name}의 화살 공격!");
+	}	
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public class Program
+{
+	public static void Main()
+	{
+		Console.WriteLine("Hello World");
+	}
+}
