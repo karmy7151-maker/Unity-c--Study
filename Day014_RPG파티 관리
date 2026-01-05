@@ -1,5 +1,5 @@
 using System;
-					
+	using System.Collections.Generic;				
 //실습: RPG파티 관리 시스템 
 
 
@@ -39,7 +39,20 @@ public class Acher:Hero{
 	
 }
 
+public class PartyManager{
 
+	public event Action<Hero> OnMemberAdded;
+	private List<Hero> members = new List<Hero>();
+	
+	public void AddMember(Hero hero){
+		members.Add(hero);	
+		OnMemberAdded?.Invoke(hero);
+	}
+	public void ShowAllMembers(){
+	members.	
+	}
+	
+}
 
 
 
@@ -61,3 +74,4 @@ public class Program
 		Console.WriteLine("Hello World");
 	}
 }
+
