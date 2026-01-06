@@ -50,7 +50,8 @@ public class PartyManager{//데이터 관리 클래스
 		OnMemberAdded?.Invoke(hero);// 이벤트 구독자가 존재할때만 실행
 	}
 	public void ShowAllMembers(){// 모든 객체 현황 함수
-		var sortList = members.OrderBy(m => m.Level);//린큐를 이용하여 정렬/레벨차순		
+		var sortList = members.OrderBy(m => m.Level);//린큐를 이용하여 정렬/레벨차순	
+		Console.WriteLine($"현재 파티 목록");
 		foreach(var m in sortList){
 			Console.WriteLine($"이름:{m.Name} 직업:{m.Job} 레벨:{m.Level}");
 			}
@@ -61,20 +62,32 @@ public class PartyManager{//데이터 관리 클래스
 
 public class Program
 {
+	
 	public static void Main()
 	{
-	PartyManager partyM = new PartyManager();
-	partyM.OnMemberAdded += (h) => Console.WriteLine($"{h.Name}이(가) 합류했습니다");// 람다식으를 이용해 함수등록
-		
-	Warrior warrior = new Warrior("나밀",4,"");// 생성자를 통한 초기화
-	Acher acher = new Acher("상엽",2,"");
+		PartyManager partyM = new PartyManager();
+		partyM.OnMemberAdded += (h) => Console.WriteLine($"{h.Name}이(가) 합류했습니다");// 람다식으를 이용해 함수등록
+		InputHero(partyM);
+		partyM.ShowAllMembers();
+	}
 	
-	partyM.AddMember(warrior);//파티추가 - 리스트추가/메세지 출력
-    partyM.AddMember(acher);
-		
-	partyM.ShowAllMembers();//멤버확인
-		
-	warrior.Attack();//다형성 확인
-    acher.Attack();
+	
+	public static void InputHero(PartyManager partyM){
+		while(true){
+			string input = Console.ReadLine();
+			if(input == "끝") break;
+			string[] stat = input.Split(' ').ToArray();
+			switch(stat[0]){
+				case "검사":
+					Warrior warrior = new Warrior(stat[1],int.Parse(stat[2]),"");
+					partyM.AddMember(warrior);
+					break;
+				case "궁수":
+					Acher acher = new Acher(stat[1],int.Parse(stat[2]),"");
+					partyM.AddMember(acher);
+					break;		
+			}	
+			partyM.ShowAllMembers();//멤버확인
+		}
 	}
 }
