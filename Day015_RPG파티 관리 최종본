@@ -1,0 +1,80 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;				
+//실습: RPG파티 관리 시스템 
+
+
+public interface IAttackable{//객체들은 공격스타일이 다르나 공격을 해야하니 공격에 관한 인터페이스 선언
+	public void Attack();	
+}
+
+public abstract class Hero:IAttackable{// 모든 객체들의 공통 속성정의
+	private string name;
+	private int level;
+	private string job;
+	//프로퍼티
+	public string Name{get;set;}
+	public int Level{get;set;}
+	public string Job{get;protected set;}
+	//추상클래스 선언 - 반드시 재정의해야함
+	public abstract void Attack();
+	//생성자로 데이터 초기화 편하게
+	public Hero(string name, int level, string job){
+		this.Name = name;
+		this.Level = level;
+		this.Job = job;
+	}
+}
+
+public class Warrior:Hero{//워리어구현
+	public Warrior(string name, int level, string job) : base(name,level,"전사"){ }//base:로 기본세팅
+	public override void Attack(){ // 오버라이드로 재정의
+		Console.WriteLine($"{Job},{Name}의 검격 공격!");
+	}
+}
+public class Acher:Hero{//아처구현
+	public Acher(string name, int level, string job) : base(name,level,"아처"){ }	//base:로 기본세팅
+	public override void Attack(){// 오버라이드로 재정의
+		Console.WriteLine($"{Job},{Name}의 화살 공격!");
+	}	
+	
+}
+
+public class PartyManager{//데이터 관리 클래스
+
+	public event Action<Hero> OnMemberAdded; // 멤버추가시 발생하는 이벤트
+	private List<Hero> members = new List<Hero>();//객체들을 관리할 리스트
+	
+	public void AddMember(Hero hero){//객체추가 함수
+		members.Add(hero);	
+		OnMemberAdded?.Invoke(hero);// 이벤트 구독자가 존재할때만 실행
+	}
+	public void ShowAllMembers(){// 모든 객체 현황 함수
+		var sortList = members.OrderBy(m => m.Level);//린큐를 이용하여 정렬/레벨차순		
+		foreach(var m in sortList){
+			Console.WriteLine($"이름:{m.Name} 직업:{m.Job} 레벨:{m.Level}");
+			}
+		}
+	}
+
+
+
+public class Program
+{
+	public static void Main()
+	{
+	PartyManager partyM = new PartyManager();
+	partyM.OnMemberAdded += (h) => Console.WriteLine($"{h.Name}이(가) 합류했습니다");// 람다식으를 이용해 함수등록
+		
+	Warrior warrior = new Warrior("나밀",4,"");// 생성자를 통한 초기화
+	Acher acher = new Acher("상엽",2,"");
+	
+	partyM.AddMember(warrior);//파티추가 - 리스트추가/메세지 출력
+    partyM.AddMember(acher);
+		
+	partyM.ShowAllMembers();//멤버확인
+		
+	warrior.Attack();//다형성 확인
+    acher.Attack();
+	}
+}
