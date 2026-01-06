@@ -1,101 +1,105 @@
 using System;
-					
-public class EnumProgram
-{
-	public enum Type{ //enum은 열거형 상수를 표현하기 위한것
-	Soft, //0
-	Stand, //1
-	Hard = 5 // 5,  숫자지정가능
-	} // 컴퓨터는 이를 0 1 2로 받아들이지만 우리는 단어로 받아들임
-	
-	public static void Main()
-	{
-		Type type; // 변수 선언
-		
-		type = Type.Soft; //값대입 반드시 이름. 으로 접근후 사용할것
-		
-		int typenum = (int)Type.Hard; // 가지고 있는 값을 정수로 변환후 저장
-		
-		
+using System.Linq;
+using System.Collections.Generic;				
+//실습: RPG파티 관리 시스템 
+
+
+public interface IAttackable{//객체들은 공격스타일이 다르나 공격을 해야하니 공격에 관한 인터페이스 선언
+	public void Attack();	
+}
+
+public abstract class Hero:IAttackable{// 모든 객체들의 공통 속성정의
+	private string name;
+	private int level;
+	private string job;
+	//프로퍼티
+	public string Name{get;set;}
+	public int Level{get;set;}
+	public string Job{get;protected set;}
+	//추상클래스 선언 - 반드시 재정의해야함
+	public abstract void Attack();
+	//생성자로 데이터 초기화 편하게
+	public Hero(string name, int level, string job){
+		this.Name = name;
+		this.Level = level;
+		this.Job = job;
 	}
 }
+
+public class Warrior:Hero{//워리어구현
+	public Warrior(string name, int level, string job) : base(name,level,"전사"){ }//base:로 기본세팅
+	public override void Attack(){ // 오버라이드로 재정의
+		Console.WriteLine($"{Job},{Name}의 검격 공격!");
+	}
+}
+public class Acher:Hero{//아처구현
+	public Acher(string name, int level, string job) : base(name,level,"아처"){ }	//base:로 기본세팅
+	public override void Attack(){// 오버라이드로 재정의
+		Console.WriteLine($"{Job},{Name}의 화살 공격!");
+	}	
+	
+}
+
+public class PartyManager{//데이터 관리 클래스
+
+	public event Action<Hero> OnMemberAdded; // 멤버추가시 발생하는 이벤트
+	private List<Hero> members = new List<Hero>();//객체들을 관리할 리스트
+	
+	public void AddMember(Hero hero){//객체추가 함수
+		members.Add(hero);	
+		OnMemberAdded?.Invoke(hero);// 이벤트 구독자가 존재할때만 실행
+	}
+	public void ShowAllMembers(){// 모든 객체 현황 함수
+		var sortList = members.OrderBy(m => m.Level);//린큐를 이용하여 정렬/레벨차순	
+		Console.WriteLine($"현재 파티 목록");
+		foreach(var m in sortList){
+			Console.WriteLine($"이름:{m.Name} 직업:{m.Job} 레벨:{m.Level}");
+			}
+		}
+	}
+
+
 
 public class Program
 {
 	
 	public static void Main()
 	{
-		int a = 10;
-		int b = 20;
-		
-		Console.WriteLine(a+b);
-		Console.WriteLine(a-b);
-		Console.WriteLine(a*b);
-		Console.WriteLine(a/b);
-		Console.WriteLine(a%b);
-		
-		int c = a;
-		c += a;
-		c -= a;
-		c *= a;
-		c ++;
-		c --;
-		
-		/*&& || ! 각 and or not 주로 if문에 쓰이며 &&은 모든 조건 만족
-		||은 한 조건일도 만족 !은 부정일시*/
-		
-		/* < > == != >= <=  비교문 각 크기,같은지,다른지,크거나같은지를 본다*/
-		
-		c = (a>b) ? a : b; //a가 b보다 크면 a를 아니면 b를 c에 대입한다
-		
-		string q = "ss";
-		string p = "pp";
-		string s = q ?? p;  //a가 null이아니면 a를 null이면 b를 대입
-		// null이란 값이 아예 없는 상태를 말함 0아님
-		// 기본적으로 문자열이 null상태를 가질 수 있고 int는 가질 수 없으나
-		//int? a같이 뒤에?를 붙이면 사용가능하다
-
+		PartyManager partyM = new PartyManager(); // 파티매니저 클래스 생성
+		partyM.OnMemberAdded += (h) => Console.WriteLine($"{h.Name}이(가) 합류했습니다");// 람다식으를 이용해 함수등록
+		partyM.OnMemberAdded += (h) => partyM.ShowAllMembers();
+		InputHero(partyM); // 파티추가 함수 실행
+		partyM.ShowAllMembers();// 최종 파티 목록 출력
 	}
-}
-public class ProgramIF
-{
-	public static void Main()
-	{
 	
-	int i = int.Parse(Console.ReadLine());
-		if( i > 10){ //if는 조건이 참일 경우 작동  {} <= 안에 있는 코드 작동
-			Console.WriteLine("i가 10보다 큽니다");
-		}
-		else if(i < 10 && i > 0){ //else if는 if가 거짓인 경우 다른 조건을 보고 참일경우 실행
-			
-			Console.WriteLine("i는 10보다 작고 0보다 큽니다");
-			
-		}
-		else if(i < 0 || i == 0){ //&& 둘다 참 || 둘중 하나만 참이여도
-			
-			Console.WriteLine("i는 0보다 작거나 0입니다");
-			
-		}
-		else{// if와 else if가 모두 거짓일 경우 작동
-			Console.WriteLine("i가 10입니다");
-		}
 	
-		int l = int.Parse(Console.ReadLine());
-		switch(l){ //()안의 변수가 여러값을 가질 경우 사용한다
-				
-			case 1:    //case 조건값:  코드   break; 식으로 작성 
-				Console.WriteLine("1입니다");
-				break;
-			case 2:
-				Console.WriteLine("2입니다");
-				break;
-			case 3:
-				Console.WriteLine("3입니다");
-				break;	
-			default: // default는 모든 맞는 케이스가 없을경우 작동한다 
-				Console.WriteLine("맞는 케이스가 없습니다");
-				break;
+	public static void InputHero(PartyManager partyM){
+		Console.WriteLine("[직업 이름 레벨] 입력 \n직업목록 검사 | 아처");
 		
-		}	
+		while(true){ 
+			string input = Console.ReadLine();
+			if(input == "끝") break; // 끝 입력시 파티추가 종료
+			string[] stat = input.Split(' ');//입력형식 직업 이름 레벨을 입력하면 ' '공백 기준으로 잘라서 배열에 저장
+			Console.WriteLine(stat.Length);
+			if(stat.Length !=3 ) { // 잘못 입력시 돌아감
+			Console.WriteLine("잘못된 입력입니다");
+			continue;
+				
+			}
+			switch(stat[0]){// 직업에 따라 생성
+				case "검사":
+					Warrior warrior = new Warrior(stat[1],int.Parse(stat[2]),"");
+					partyM.AddMember(warrior);
+					break;
+				case "궁수":
+					Acher acher = new Acher(stat[1],int.Parse(stat[2]),"");
+					partyM.AddMember(acher);
+					break;		
+				default:// 직업 잘못 입력시 넘어감
+					Console.WriteLine("해당 직업은 존재하지 않습니다");
+					break;
+			}	
+			
+		}
 	}
 }
