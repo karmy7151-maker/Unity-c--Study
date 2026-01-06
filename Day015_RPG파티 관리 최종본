@@ -65,19 +65,28 @@ public class Program
 	
 	public static void Main()
 	{
-		PartyManager partyM = new PartyManager();
+		PartyManager partyM = new PartyManager(); // 파티매니저 클래스 생성
 		partyM.OnMemberAdded += (h) => Console.WriteLine($"{h.Name}이(가) 합류했습니다");// 람다식으를 이용해 함수등록
-		InputHero(partyM);
-		partyM.ShowAllMembers();
+		partyM.OnMemberAdded += (h) => partyM.ShowAllMembers();
+		InputHero(partyM); // 파티추가 함수 실행
+		partyM.ShowAllMembers();// 최종 파티 목록 출력
 	}
 	
 	
 	public static void InputHero(PartyManager partyM){
-		while(true){
+		Console.WriteLine("[직업 이름 레벨] 입력 \n직업목록 검사 | 아처");
+		
+		while(true){ 
 			string input = Console.ReadLine();
-			if(input == "끝") break;
-			string[] stat = input.Split(' ').ToArray();
-			switch(stat[0]){
+			if(input == "끝") break; // 끝 입력시 파티추가 종료
+			string[] stat = input.Split(' ');//입력형식 직업 이름 레벨을 입력하면 ' '공백 기준으로 잘라서 배열에 저장
+			Console.WriteLine(stat.Length);
+			if(stat.Length !=3 ) { // 잘못 입력시 돌아감
+			Console.WriteLine("잘못된 입력입니다");
+			continue;
+				
+			}
+			switch(stat[0]){// 직업에 따라 생성
 				case "검사":
 					Warrior warrior = new Warrior(stat[1],int.Parse(stat[2]),"");
 					partyM.AddMember(warrior);
@@ -86,8 +95,11 @@ public class Program
 					Acher acher = new Acher(stat[1],int.Parse(stat[2]),"");
 					partyM.AddMember(acher);
 					break;		
+				default:// 직업 잘못 입력시 넘어감
+					Console.WriteLine("해당 직업은 존재하지 않습니다");
+					break;
 			}	
-			partyM.ShowAllMembers();//멤버확인
+			
 		}
 	}
 }
